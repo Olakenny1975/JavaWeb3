@@ -3,5 +3,11 @@
   hosts: webservers
  
   tasks:
-  - name: ping servers
-    ansible.builtin.ping:
+- name: Download artifact from S3
+  amazon.aws.s3_object:
+    bucket: "{{ BUCKET_NAME }}"
+    object: "{{ ARTIFACT_NAME }}"
+    dest: "~/{{ ARTIFACT }}"
+    mode: get
+  delegate_to: localhost
+
