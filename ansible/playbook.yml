@@ -1,0 +1,7 @@
+---
+- name: Update web servers
+  hosts: webservers
+ 
+  tasks:
+  - name: ping servers
+    ansible.builtin.ping:
