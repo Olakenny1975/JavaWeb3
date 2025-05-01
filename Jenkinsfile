@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         BUCKET_NAME = "project-1-ken-bucket"
-        ARTIFACT = "" // Will be set dynamically
+        ARTIFACT = "" // will be set dynamically
     }
 
     stages {
@@ -28,20 +28,19 @@ pipeline {
         stage('Upload Artifact') {
             steps {
                 script {
-                    // Get the actual WAR filename (e.g., WebAppCal-0.0.7.war)
+                    // Capture exact artifact filename (e.g., WebAppCal-0.0.7.war)
                     def artifactName = sh(
                         script: "ls target/WebAppCal-*.war | xargs -n 1 basename",
                         returnStdout: true
                     ).trim()
-
-                    // Set artifact name to environment variable for later use
                     env.ARTIFACT = artifactName
 
-                    // Upload WAR to S3 bucket
+                    // Upload to S3
                     sh "aws s3 cp target/${env.ARTIFACT} s3://${env.BUCKET_NAME}/${env.ARTIFACT}"
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 dir('ansible') {
@@ -53,5 +52,5 @@ pipeline {
                 }
             }
         }
-
-       
+    }
+}
