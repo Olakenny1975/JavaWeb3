@@ -42,29 +42,14 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy') {
             steps {
-                sshagent(['ec2-ssh-key-id']) {  // Replace with your SSH credentials ID in Jenkins
-                    sh """
-                        ssh -o StrictHostKeyChecking=no ec2-user@your-ec2-public-ip << EOF
-                            echo "Stopping Tomcat..."
-                            sudo systemctl stop tomcat
-
-                            echo "Removing old WAR and exploded app..."
-                            sudo rm -rf /opt/tomcat/webapps/ROOT*
-
-                            echo "Downloading WAR from S3..."
-                            aws s3 cp s3://${BUCKET_NAME}/${ARTIFACT} /opt/tomcat/webapps/ROOT.war
-
-                            echo "Starting Tomcat..."
-                            sudo systemctl start tomcat
-
-                            echo "Deployment complete."
-                        EOF
-                    """
-                }
+                sh***
+                cd ansible
+                ansible-playbook -i aws_ec2.yml playbook.yml -e "Bucket_NAME-${env.BUCKET_NAME-$} ARTIFAT_NAME-${env.ARIFACT_NAME}"
+                ***
             }
         }
     }
 }
+       
