@@ -30,9 +30,7 @@ pipeline {
                 script {
                     // Capture exact artifact filename (e.g., WebAppCal-0.0.7.war)
                     def artifactName = sh(
-                        script: "ls target/WebAppCal-*.war | xargs -n 1 basename",
-                        returnStdout: true
-                    ).trim()
+                        script: "cd target && ls WebAppCal-*.war" , returnStdout: true).trim()
                     env.ARTIFACT = "${artifactName}"
 
                     // Upload to S3
