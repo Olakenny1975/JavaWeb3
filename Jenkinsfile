@@ -42,14 +42,16 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+             stage('Deploy') {
             steps {
-                sh***
-                cd ansible
-                ansible-playbook -i aws_ec2.yml playbook.yml -e "Bucket_NAME-${env.BUCKET_NAME-$} ARTIFAT_NAME-${env.ARIFACT_NAME}"
-                ***
+                dir('ansible') {
+                    sh """
+                        ansible-playbook -i aws_ec2.yml playbook.yml \\
+                            -e "BUCKET_NAME=${env.BUCKET_NAME}" \\
+                            -e "ARTIFACT_NAME=${env.ARTIFACT}"
+                    """
+                }
             }
         }
-    }
-}
+
        
