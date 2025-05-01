@@ -3,7 +3,7 @@
   hosts: webservers
  
   tasks:
-- name: Download artifact from S3
+- name: Get Artifact
   amazon.aws.s3_object:
     bucket: "{{ BUCKET_NAME }}"
     object: "{{ ARTIFACT_NAME }}"
