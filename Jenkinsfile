@@ -31,7 +31,7 @@ pipeline {
                     // Capture exact artifact filename (e.g., WebAppCal-0.0.7.war)
                     def artifactName = sh(
                         script: "cd target && ls WebAppCal-*.war" , returnStdout: true).trim()
-                    env.ARTIFACT = "${artifactName}"
+                    env.ARTIFACT = artifactName
 
                     // Upload to S3
                     sh "aws s3 cp target/${env.ARTIFACT} s3://${env.BUCKET_NAME}/${env.ARTIFACT}"
