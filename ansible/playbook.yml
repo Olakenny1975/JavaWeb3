@@ -7,7 +7,11 @@
   amazon.aws.s3_object:
     bucket: "{{ BUCKET_NAME }}"
     object: "{{ ARTIFACT_NAME }}"
-    dest: ~/"{{ ARTIFACT }}"
+    dest: ~/"{{ ARTIFACT_NAME }}"
     mode: get
   delegate_to: localhost
 
+name: Deploy Artifact To hosts
+ansible.builtin.copy:
+  src: ~/"{{ ARTIFACT_NAME }}"
+  dest: /home/ec2-user/apache-tomcat/webapps/"{{ ARTIFACT_NAME }}"
