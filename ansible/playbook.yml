@@ -11,7 +11,7 @@
     mode: get
   delegate_to: localhost
 
-name: Deploy Artifact To hosts
+name: Deploy Artifact To Hosts
 ansible.builtin.copy:
   src: ~/"{{ ARTIFACT_NAME }}"
   dest: /home/ec2-user/apache-tomcat/webapps/"{{ ARTIFACT_NAME }}"
