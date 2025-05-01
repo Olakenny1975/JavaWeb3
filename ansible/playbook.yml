@@ -7,7 +7,7 @@
   amazon.aws.s3_object:
     bucket: "{{ BUCKET_NAME }}"
     object: "{{ ARTIFACT_NAME }}"
-    dest: "~/{{ ARTIFACT }}"
+    dest: ~/"{{ ARTIFACT }}"
     mode: get
   delegate_to: localhost
 
