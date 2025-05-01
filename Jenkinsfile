@@ -33,7 +33,7 @@ pipeline {
                         script: "ls target/WebAppCal-*.war | xargs -n 1 basename",
                         returnStdout: true
                     ).trim()
-                    env.ARTIFACT = artifactName
+                    env.ARTIFACT = "${artifactName}"
 
                     // Upload to S3
                     sh "aws s3 cp target/${env.ARTIFACT} s3://${env.BUCKET_NAME}/${env.ARTIFACT}"
