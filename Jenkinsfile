@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         BUCKET_NAME = "project-1-ken-bucket"
-        ARTIFACT = ""
     }
 
     stages {
