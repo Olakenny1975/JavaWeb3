@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         }
-             stage('Deploy') {
+        stage('Deploy') {
             steps {
                 dir('ansible') {
                     sh """
