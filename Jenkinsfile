@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 pipeline {
     agent any
     stages {
@@ -31,3 +32,24 @@ pipeline {
         }
     }
 }
+=======
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+                sh"""
+                ls src
+                """
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
+>>>>>>> 35a0a0c (chore: add jenkinsfile)
