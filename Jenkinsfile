@@ -1,53 +1,47 @@
+def artifactName = ""  // Declare globally
 pipeline {
     agent any
-
     environment {
         BUCKET_NAME = "project-1-ken-bucket"
     }
-
     stages {
-        stage('Checkout') {
+        stage('Clean old Artifacts') {
             steps {
-                checkout scm
+                sh 'rm -rf target'
             }
         }
-
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn package'
             }
         }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-
         stage('Upload Artifact') {
             steps {
                 script {
-                    // Find the WAR file
-                    def artifactName = sh(script: "cd target && ls WebAppCal-*.war" , returnStdout: true).trim()
-                    env.ARTIFACT = artifactName
-
+                    // Capture WAR file name
+                    artifactName = sh(script: "cd target && ls WebAppCal-*.war", returnStdout: true).trim()
                     // Upload to S3
-                    sh***
-                    cd target
-                    aws s3 cp ${env.ARTIFACT} s3://${env.BUCKET_NAME}/
-                    ***
-                }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                dir('ansible') {
                     sh """
-                    ansible-playbook -i aws_ec2.yml playbook.yml -e "BUCKET_NAME=${env.BUCKET_NAME}" ARTIFACT_NAME=${env.ARTIFACT}"
+                        cd target
+                        aws s3 cp ${artifactName} s3://${env.BUCKET_NAME}/
                     """
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                sh """
+                    cd ansible
+                    ansible-playbook -i aws_ec2.yml playbook.yml \
+                        -e "BUCKET_NAME=${env.BUCKET_NAME} ARTIFACT_NAME=${artifactName}"
+                """
+            }
+        }
     }
 }
+
+
+
+
+
+
