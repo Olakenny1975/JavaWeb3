@@ -10,8 +10,7 @@ tasks:
       dest: "~/{{ ARTIFACT_NAME }}"
       mode: get
     delegate_to: localhost
-
-    
+ 
 - name: Deploy Artifact To Hosts
       ansible.builtin.copy:
         src: "/tmp/{{ ARTIFACT_NAME }}"
