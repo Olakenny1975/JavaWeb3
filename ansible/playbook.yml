@@ -1,17 +1,18 @@
 ---
-name: Update web servers
-hosts: webservers
+- name: Update web servers
+  hosts: webserver  
   
-tasks:
-  - name: Get Artifact from S3
-    amazon.aws.s3_object:
-      bucket: "{{ BUCKET_NAME }}"
-      object: "{{ ARTIFACT_NAME }}"
-      dest: "~/{{ ARTIFACT_NAME }}"
-      mode: get
-    delegate_to: localhost
- 
-- name: Deploy Artifact To Hosts
+  tasks:
+    - name: Get Artifact
+      amazon.aws.s3_object:
+        bucket: "{{ BUCKET_NAME }}"
+        object: "{{ ARTIFACT_NAME }}"
+        dest: "{{ ARTIFACT_NAME }}"
+        mode: get
+      delegate_to: localhost
+
+    - name: Deploy Artifact To Hosts
       ansible.builtin.copy:
-        src: "/tmp/{{ ARTIFACT_NAME }}"
-        dest: "/home/ec2-user/apache-tomcat/webapps/
+        src: "{{ ARTIFACT_NAME}}"
+        dest: /home/ec2-user/apache-tomcat/webapps/{{ARTiFACT_NAME}}
+        
