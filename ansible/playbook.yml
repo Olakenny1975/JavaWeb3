@@ -13,6 +13,6 @@ tasks:
 
     
 - name: Deploy Artifact To Hosts
-    ansible.builtin.copy:
-      src: ~/{{ARTIFACT_NAME}}
-      dest: /home/ec2-user/apache-tomcat/webapps/ROOT.war
+  ansible.builtin.copy:
+    src: "{{ lookup('env', 'HOME') }}/{{ ARTIFACT_NAME }}"
+    dest: /home/ec2-user/apache-tomcat/webapps/ROOT.war
