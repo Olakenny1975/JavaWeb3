@@ -14,5 +14,5 @@
     - name: Deploy Artifact To Hosts
       ansible.builtin.copy:
         src: "{{ ARTIFACT_NAME}}"
-        dest: /home/ec2-user/apache-tomcat/webapps/{{ARTiFACT_NAME}}
+        dest: /home/ec2-user/apache-tomcat/webapps/{{ARTiFACT_NAME}}Root.war
         
